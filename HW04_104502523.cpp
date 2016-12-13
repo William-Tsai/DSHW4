@@ -75,9 +75,32 @@ int main()
 }
 
 void bubbleSort(int *a, int length){
+    for(int i = 0; i < length; i++){
+	for(int j = 0; j < length - i - 1; j++){
+	    if(a[j] > a[j + 1]){
+		int temp = a[j];
+		a[j] = a[j + 1];
+		a[j + 1] = temp;
+	    }
+	}
+    }
 }
 
 void selectionSort(int *a,int length){
+    for(int i = 0; i < length; i++){
+	int index = i, min = a[i];
+	for(int j = i + 1; j < length; j++){
+	    if(a[j] < min){
+		min = a[j];
+		index = j;
+	    }
+	}
+	if(index != i){
+	    int temp = a[i];
+	    a[i] = a[index];
+	    a[index] = temp;
+	}
+    }
 }
 
 void quickSort(int *a,int length){
