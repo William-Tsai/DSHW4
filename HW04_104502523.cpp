@@ -123,8 +123,46 @@ void quickSort(int *a,int length){
 }
 
 void heapSort(int *a,int length){
+    int *heap = new int[length], h_l = 0;
+    for(int i = 0; i < length; i++){ // insert into heap
+	heap[h_l++] = a[i];
+	int index = h_l - 1;
+	while((index - 1) >= 0 && heap[index] < heap[(index - 1) / 2]){
+	    int temp = heap[index];
+	    heap[index] = heap[(index - 1) / 2];
+	    heap[(index - 1) / 2] = temp;
+	    index = (index - 1) / 2;
+	}
+    }
+    for(int i = 0; i < length; i++){ // pop from heap
+	a[i] = heap[0];
+	heap[0] = heap[--h_l];
+	int index = 0;
+	while(2 * index + 1 < h_l){
+	    int child = 2 * index + 1;
+	    if(child + 1 < h_l && heap[child + 1] < heap[child]) child++;
+	    if(heap[index] > heap[child]){
+		int temp = heap[index];
+		heap[index] = heap[child];
+		heap[child] = temp;
+	    }
+	    index = child;
+	}
+    }
 }
 
 void mergeSort(int *a,int length){
+    if(length <= 1) return;
+    int *temp = new int[length], t_l = 0;
+    for(int i = 0; i < length; i++) temp[i] = a[i];
+    int m = length / 2, l = 0, r = m;
+    mergeSort(temp, m);
+    mergeSort(&(temp[m]), length - m);
+    while(t_l < length){
+	if(l < m && (temp[l] < temp[r] || r == length)) a[t_l++] = temp[l++];
+	else if(r < length) a[t_l++] = temp[r++];
+    }
+    delete temp;
+    return;
 }
 
