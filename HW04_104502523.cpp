@@ -104,6 +104,22 @@ void selectionSort(int *a,int length){
 }
 
 void quickSort(int *a,int length){
+    if(length <= 1) return;
+    int l = 1, r = length;
+    while(1){
+	while(l < r && a[l] < a[0]) l++;
+	while(l < r && a[r - 1] >= a[0]) r--;
+	if(l < r){
+	    int temp = a[l];
+	    a[l] = a[r - 1];
+	    a[r - 1] = temp;
+	}else break;
+    }
+    int temp = a[l - 1];
+    a[l - 1] = a[0];
+    a[0] = temp;
+    quickSort(a, l);
+    quickSort(&(a[l]), length - l);
 }
 
 void heapSort(int *a,int length){
